@@ -361,18 +361,18 @@ async def setup(update: Update, context: ContextTypes.DEFAULT_TYPE):
             stop_pct = 100 * (last_close - stop) / last_close
             take = last_close * 1.05
             position_size_base = (risk_amount / (last_close - stop)) if last_close > stop else 0
+            notional = position_size_base * last_close
 
-			notional = position_size_base * last_close
-
-	msg += (
-    f"🪙 *{symbol}*\n"
-    f"ATR(14): {atr:.4f}\n"
-    f"📈 Сетап: *LONG*\n"
-    f"— Вход: {last_close:.4f} USDT\n"
-    f"— Стоп: {stop:.4f} (-{stop_pct:.2f}%)\n"
-    f"— Тейк: {take:.4f} (+5%)\n\n"
-    f"📏 Позиция: *{position_size_base:.3f} {symbol.split('/')[0]}* (~{notional:.2f} USDT)\n\n"
-)
+            msg += (
+                f"🪙 *{symbol}*\n"
+                f"ATR(14): {atr:.4f}\n"
+                f"📈 Сетап: *LONG*\n"
+                f"— Вход: {last_close:.4f} USDT\n"
+                f"— Стоп: {stop:.4f} (-{stop_pct:.2f}%)\n"
+                f"— Тейк: {take:.4f} (+5%)\n\n"
+                f"📏 Позиция: *{position_size_base:.3f} {symbol.split('/')[0]}* (~{notional:.2f} USDT)\n\n"
+            )
+	
 
         msg += (
             f"💰 Депозит: {deposit:.2f} USDT\n"
