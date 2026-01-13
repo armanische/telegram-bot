@@ -541,7 +541,7 @@ async def ai(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"MACD: {macd_line.tolist()[-5:]}\n"
             f"MACD-гистограмма: {macd_hist.tolist()[-5:]}\n"
         )
-		response = client.responses.create(
+        response = client.responses.create(
             model="gpt-4.1-mini",
             input=[
                 {"role": "system", "content": "Ты опытный криптоаналитик. Проанализируй данные: цены, RSI, SMA, MACD. Дай краткий вывод для трейдера (входы/выходы/уровни/риск)."},
