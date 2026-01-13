@@ -541,14 +541,14 @@ async def ai(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"MACD: {macd_line.tolist()[-5:]}\n"
             f"MACD-гистограмма: {macd_hist.tolist()[-5:]}\n"
         )
-        response = client.chat.completions.create(
-            model="gpt-4o",
-            messages=[
+		response = client.responses.create(
+            model="gpt-4.1-mini",
+            input=[
                 {"role": "system", "content": "Ты опытный криптоаналитик. Проанализируй данные: цены, RSI, SMA, MACD. Дай краткий вывод для трейдера (входы/выходы/уровни/риск)."},
                 {"role": "user", "content": trend_text}
             ]
         )
-        insight = response.choices[0].message.content
+        insight = response.output_text
         await update.message.reply_text(f"📊 AI-анализ {pair}:\n\n{insight}")
     except Exception as e:
         await update.message.reply_text(f"❌ Ошибка AI-анализа: {e}")
