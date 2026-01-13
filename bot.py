@@ -283,4 +283,41 @@ def main():
     app.run_polling()
 
 if __name__ == "__main__":
+    import threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+def start_fake_web():
+    port = int(os.environ.get("PORT", 10000))
+
+    class Handler(BaseHTTPRequestHandler):
+        def do_GET(self):
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(b"Telegram bot is running")
+
+    server = HTTPServer(("0.0.0.0", port), Handler)
+    print(f"🌐 Fake web server listening on port {port}")
+    server.serve_forever()
+
+
+def main():
+    if not TOKEN:
+        raise RuntimeError("TELEGRAM_BOT_TOKEN не найден. Проверь переменные окружения.")
+
+    # запускаем HTTP-порт для Render
+    threading.Thread(target=start_fake_web, daemon=True).start()
+
+    app = ApplicationBuilder().token(TOKEN).build()
+
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("balance", balance))
+    app.add_handler(CommandHandler("hot", hot))
+    app.add_handler(CommandHandler("ai", ai))
+    app.add_handler(CallbackQueryHandler(handle_callback))
+
+    print("✅ Telegram бот запущен (Render Web Service режим)")
+    app.run_polling()
+
+
+if __name__ == "__main__":
     main()
