@@ -1,0 +1,6 @@
+git init
+git add .
+git commit -m "bot"
+git branch -M main
+git remote add origin https://github.com/armanische/telegram-bot.git
+git push -u origin main
