@@ -362,7 +362,7 @@ async def setup(update: Update, context: ContextTypes.DEFAULT_TYPE):
             take = last_close * 1.05
             position_size_base = (risk_amount / (last_close - stop)) if last_close > stop else 0
 
-           notional = position_size_base * last_close
+			notional = position_size_base * last_close
 
 	msg += (
     f"🪙 *{symbol}*\n"
